@@ -7,6 +7,7 @@
                         <h2 class="text-center mb-4">
                             {{ isModeForm === "Login" ? "Login" : "Register" }}
                         </h2>
+
                         <!-- Formulario de Login -->
                         <form v-if="isModeForm === 'Login'" @submit.prevent="handleLogin">
                             <div class="mb-3">
@@ -19,6 +20,7 @@
                             </div>
                             <button type="submit" class="btn btn-primary w-100">Login</button>
                         </form>
+
                         <!-- Formulario de Registro -->
                         <form v-else-if="isModeForm === 'Register'" @submit.prevent="handleRegister">
                             <div class="mb-3">
@@ -43,24 +45,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineEmits } from "vue";
-
-// Props
+import { ref } from "vue";
 defineProps<{ isModeForm: string }>();
-
-// Emit para enviar datos al componente padre
 const emit = defineEmits(["submit"]);
 
-// Variables reactivas
 const email = ref("");
 const password = ref("");
-const name = ref(""); // Solo se usa en el registro
+const name = ref("");
 
-// Métodos
 const handleLogin = () => {
     emit("submit", { type: "login", email: email.value, password: password.value });
 };
-
 const handleRegister = () => {
     emit("submit", { type: "register", name: name.value, email: email.value, password: password.value });
 };
